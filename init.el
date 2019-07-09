@@ -3,7 +3,11 @@
 (unless (require 'el-get nil 'noerror)
   (require 'package)
   (add-to-list 'package-archives
-               '("melpa" . "http://melpa.org/packages/"))
+               '("melpa" . "https://melpa.org/packages/") t)
+  (add-to-list 'package-archives
+               '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+  (add-to-list 'package-archives
+               '("org" . "https://orgmode.org/elpa") t)
   (package-refresh-contents)
   (package-initialize)
   (package-install 'el-get)
@@ -44,7 +48,6 @@
 
 ;; テキストファイル・新規バッファの文字コード
 (set-file-name-coding-system 'utf-8)
-
 
 ;; C-hをBackSpaceに設定
 (global-set-key (kbd "C-h") 'delete-backward-char)
@@ -88,13 +91,13 @@
 
        ;; 全角かな設定
        (set-fontset-font (frame-parameter nil 'font)
-                         'japanese-jisx0208
+                         'japanese-jisx0213
                          (font-spec :family "Noto Sans CJK JP" :size 14))
        
        ;; 半角ｶﾅ設定
        (set-fontset-font (frame-parameter nil 'font)
-                         'katakana-jisx0208
-                         (font-spec :family "Noto Sans CJK JP" :size 14)) )
+                         'katakana-jisx0213
+                         (font-spec :family "Noto Sans CJK JP" :size 14)))
       (t 0))
 
 ;; GUI Settings
