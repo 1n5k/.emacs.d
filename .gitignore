@@ -9,3 +9,5 @@ el-get/recipes/emacswiki/*
 el-get/recipes/elpa/*
 el-get/dir
 elpa/archives/*
+eshell/history
+eww/
