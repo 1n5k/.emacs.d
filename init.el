@@ -89,14 +89,14 @@
        (set-face-attribute 'default nil :family "NotoSansMono Nerd Font" :height 100)
        ;(add-to-list 'default-frame-alist '(font . "NotoSansMono Nerd Font-14" ))
 
-       ;; 全角かな設定
+       ;; 全角かな設定 Linuxではjapanese-jisx0213となる
        (set-fontset-font (frame-parameter nil 'font)
-                         'japanese-jisx0213
+                         'japanese-jisx0213-2
                          (font-spec :family "Noto Sans CJK JP" :size 14))
        
-       ;; 半角ｶﾅ設定
+       ;; 半角ｶﾅ設定 Linuxではkatakana-jisx0213でも問題ない
        (set-fontset-font (frame-parameter nil 'font)
-                         'katakana-jisx0213
+                         'katakana-jisx0201
                          (font-spec :family "Noto Sans CJK JP" :size 14)))
       (t 0))
 

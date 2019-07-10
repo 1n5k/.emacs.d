@@ -1,0 +1,8 @@
+= Reference Web site list
+* About Japanese charset name  +
+link:https://www.gnu.org/software/emacs/manual/html_node/emacs/Charsets.html[Charsets] +
+
+* http://extra-vision.blogspot.com/2016/07/emacs.html  
+* https://qiita.com/sotarok/items/0d525e568a6088f6f6bb
+* https://qiita.com/holishix@github/items/8d9b40fd68ef8ca0e821
+
