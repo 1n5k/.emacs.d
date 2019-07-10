@@ -1,7 +1,7 @@
 = これは何
-* emacs25以上の.emacs.dです。+
-+ Linux(Ubuntu18.04, Arch Linux), mac OS(iTerm2), Windows 10, WSL(Windows Terminal)での動作を確認しています。 +
-+ Tor(The onion routing)を使用した環境での利用は想定されていません。 +
+* emacs25以上の.emacs.dです。
+* Linux(Ubuntu18.04, Arch Linux), mac OS(iTerm2), Windows 10, WSL(Windows Terminal)での動作を確認しています。 
+* Tor(The onion routing)を使用した環境での利用は想定されていません。 
 
 =  Dependency
 == Font
