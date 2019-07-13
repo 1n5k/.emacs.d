@@ -1,0 +1,6 @@
+.on Emacs buffer...
+----
+C-x C-f /sudo::[RET]
+****[Enter root password]
+/path/to/file[RET]
+----
