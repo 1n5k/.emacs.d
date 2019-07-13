@@ -14,7 +14,10 @@
   (require 'el-get))
 
 (add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
-(el-get 'sync)
+;; Reference https://github.com/dimitri/el-get#advanced-usage-with-local-recipes]
+;; > Placing el-get-bundle macro calls instead of (el-get 'sync) in your init file to 
+;; > explicitly specify which packages should be installed. 
+;;(el-get 'sync)
 
 ;; auto-completeを適用
 (el-get-bundle auto-complete)
