@@ -5,9 +5,6 @@ ac-comphist.dat
 auto-save-list/
 *.elc
 *~
-el-get/recipes/emacswiki/*
-el-get/recipes/elpa/*
 el-get/dir
-elpa/archives/*
 eshell/history
 eww/

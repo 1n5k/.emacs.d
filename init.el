@@ -1,26 +1,8 @@
-(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
-
-(unless (require 'el-get nil 'noerror)
-  (require 'package)
-  (add-to-list 'package-archives
-               '("melpa" . "https://melpa.org/packages/") t)
-  (add-to-list 'package-archives
-               '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-  (add-to-list 'package-archives
-               '("org" . "https://orgmode.org/elpa") t)
-  (package-refresh-contents)
-  (package-initialize)
-  (package-install 'el-get)
-  (require 'el-get))
-
-(add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
-;; Reference https://github.com/dimitri/el-get#advanced-usage-with-local-recipes]
-;; > Placing el-get-bundle macro calls instead of (el-get 'sync) in your init file to 
-;; > explicitly specify which packages should be installed. 
-;;(el-get 'sync)
-
-;; auto-completeを適用
-(el-get-bundle auto-complete)
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
+(package-initialize)
 
 ;; dracula-themeを使用 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
@@ -71,9 +53,9 @@
 (ido-mode 1)
 
 ;; 鬼軍曹を追加
-(add-to-list 'load-path "~/.emacs.d/drill-instructor")
-(require 'drill-instructor)
-(setq drill-instructor-global t)
+;; (add-to-list 'load-path "~/.emacs.d/drill-instructor")
+;; (require 'drill-instructor)
+;; (setq drill-instructor-global t)
 
 ;; shellの文字化けを回避
 (add-hook 'shell-mode-hook
@@ -89,18 +71,18 @@
 
 (cond ((display-graphic-p)
        ;; 半角英字設定
-       (set-face-attribute 'default nil :family "NotoSansMono Nerd Font" :height 100)
+       (set-face-attribute 'default nil :family "NotoSansMono Nerd Font" :height 150)
        ;(add-to-list 'default-frame-alist '(font . "NotoSansMono Nerd Font-14" ))
 
        ;; 全角かな設定 Linuxではjapanese-jisx0213となる
        (set-fontset-font (frame-parameter nil 'font)
                          'japanese-jisx0213-2
-                         (font-spec :family "Noto Sans CJK JP" :size 14))
+                         (font-spec :family "Noto Sans CJK JP" :size 20))
        
        ;; 半角ｶﾅ設定 Linuxではkatakana-jisx0213でも問題ない
        (set-fontset-font (frame-parameter nil 'font)
                          'katakana-jisx0201
-                         (font-spec :family "Noto Sans CJK JP" :size 14)))
+                         (font-spec :family "Noto Sans CJK JP" :size 20)))
       (t 0))
 
 ;; GUI Settings
@@ -119,6 +101,24 @@
   (eaw-fullwidth))
 
 
+(require 'auto-complete)
+(require 'auto-complete-config)
+;; enable AC global 
+(global-auto-complete-mode t)
+(define-key ac-completing-map (kbd "M-n") 'ac-next)  ; M-n, next suggest
+(define-key ac-completing-map (kbd "M-p") 'ac-previous) ; M-p, previous suggest
+(setq-default ac-sources '(ac-source-filename ac-source-words-in-same-mode-buffers))
+    ;; また、Emacs Lispモードではac-source-symbolsを追加で利用
+    (add-hook 'emacs-lisp-mode-hook (lambda () (add-to-list 'ac-sources 'ac-source-symbols t)))
+    ;; 以下、自動で補完する人用
+    (setq ac-auto-start 3)
+
+(require 'projectile)
+(projectile-global-mode)
+(require 'projectile-rails)
+(add-hook 'projectile-mode-hook 'projectile-rails-on)
+
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -126,10 +126,15 @@
  ;; If there is more than one, they won't work right.
  '(blink-cursor-mode nil)
  '(column-number-mode t)
- '(package-selected-packages (quote (dracula-theme))))
+ '(package-selected-packages
+   (quote
+    (projectile-rails ruby-additional ruby-electric ruby-end ruby-refactor auto-complete dracula-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+
+
