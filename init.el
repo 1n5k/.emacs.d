@@ -133,7 +133,8 @@
  '(column-number-mode t)
  '(package-selected-packages
    (quote
-    (exec-path-from-shell projectile-rails ruby-additional ruby-electric ruby-end ruby-refactor auto-complete dracula-theme))))
+    (rust-mode projectile-rails ruby-additional ruby-electric ruby-end ruby-refactor auto-complete dracula-theme))))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
