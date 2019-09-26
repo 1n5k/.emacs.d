@@ -113,11 +113,16 @@
     ;; 以下、自動で補完する人用
     (setq ac-auto-start 3)
 
+
+;; Rails configration
 (require 'projectile)
 (projectile-global-mode)
 (require 'projectile-rails)
 (add-hook 'projectile-mode-hook 'projectile-rails-on)
 
+
+;; shellのPATHを引継ぐ
+(exec-path-from-shell)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -128,7 +133,7 @@
  '(column-number-mode t)
  '(package-selected-packages
    (quote
-    (projectile-rails ruby-additional ruby-electric ruby-end ruby-refactor auto-complete dracula-theme))))
+    (exec-path-from-shell projectile-rails ruby-additional ruby-electric ruby-end ruby-refactor auto-complete dracula-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
