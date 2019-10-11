@@ -46,7 +46,7 @@
 ;; 初期メッセージを消去
 (setq initial-scratch-message "")
 
-;; 日本語に設定する
+;; 文字コードをUTF-8に設定する
 (set-language-environment "UTF-8")
 
 ;; IDOを有効化
@@ -115,14 +115,23 @@
 
 
 ;; Rails configration
-(require 'projectile)
-(projectile-global-mode)
-(require 'projectile-rails)
-(add-hook 'projectile-mode-hook 'projectile-rails-on)
+;; (require 'projectile)
+;; (projectile-global-mode)
+;; (require 'projectile-rails)
+;; (add-hook 'projectile-mode-hook 'projectile-rails-on)
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+
+;; Ruby2.0以上を使う場合は、coding utf-8 のマジックコメントを書く必要がないので、自動挿入機能を無効にする。
+(setq ruby-insert-encodig-magic-comment nil)
+(autoload 'ruby-mode "ruby-mode" "Major mode for ruby files" t)
+   (add-to-list 'auto-mode-alist '("\\.rb\\'" . ruby-mode))
+   (add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
 
 
 ;; shellのPATHを引継ぐ
-(exec-path-from-shell)
+(when (eq system-type 'gnu/linux)
+  (exec-path-from-shell-initialize))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -133,7 +142,7 @@
  '(column-number-mode t)
  '(package-selected-packages
    (quote
-    (rust-mode projectile-rails ruby-additional ruby-electric ruby-end ruby-refactor auto-complete dracula-theme))))
+    (rust-mode ac-emoji ac-html-bootstrap ac-mozc esh-autosuggest fcitx web-mode web-server websocket markdown-mode exec-path-from-shell projectile-rails ruby-additional ruby-electric ruby-end ruby-refactor auto-complete dracula-theme))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

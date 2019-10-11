@@ -9,4 +9,7 @@ eshell/history
 eww/
 projectile-bookmarks.eld
 recentf
+tramp
 
+# no track elpa/
+elpa/

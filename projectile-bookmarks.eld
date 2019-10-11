@@ -1,1 +1,0 @@
-("~/dining_phylosophers/" "~/dotfiles/.emacs.d/" "~/dotfiles/" "~/.emacs.d/")
