@@ -115,14 +115,14 @@
 
 
 ;; Rails configration
-(require 'projectile)
-(projectile-global-mode)
-(require 'projectile-rails)
-(add-hook 'projectile-mode-hook 'projectile-rails-on)
+;; (require 'projectile)
+;; (projectile-global-mode)
+;; (require 'projectile-rails)
+;; (add-hook 'projectile-mode-hook 'projectile-rails-on)
 
 
-;; shellのPATHを引継ぐ
-(exec-path-from-shell)
+;; ;; shellのPATHを引継ぐ
+;; (exec-path-from-shell)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
