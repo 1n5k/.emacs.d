@@ -128,10 +128,10 @@
    (add-to-list 'auto-mode-alist '("\\.rb\\'" . ruby-mode))
    (add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
 
-
 ;; shellのPATHを引継ぐ
 (when (eq system-type 'gnu/linux)
   (exec-path-from-shell-initialize))
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
