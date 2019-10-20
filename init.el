@@ -1,19 +1,8 @@
-(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
-
-(unless (require 'el-get nil 'noerror)
-  (require 'package)
-  (add-to-list 'package-archives
-               '("melpa" . "http://melpa.org/packages/"))
-  (package-refresh-contents)
-  (package-initialize)
-  (package-install 'el-get)
-  (require 'el-get))
-
-(add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
-(el-get 'sync)
-
-;; auto-completeを適用
-(el-get-bundle auto-complete)
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
+(package-initialize)
 
 ;; dracula-themeを使用 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
@@ -38,11 +27,12 @@
 ;; インデント文字をタブではなく空白に設定
 (setq-default indent-tabs-mode nil)
 
-;; デフォルトの文字コードを設定
+;; デフォルトの文字コード
 (set-default-coding-systems 'utf-8)
 (prefer-coding-system 'utf-8)
+
+;; テキストファイル・新規バッファの文字コード
 (set-file-name-coding-system 'utf-8)
-(set-buffer-file-coding-system 'utf-8)
 
 ;; C-hをBackSpaceに設定
 (global-set-key (kbd "C-h") 'delete-backward-char)
@@ -56,16 +46,16 @@
 ;; 初期メッセージを消去
 (setq initial-scratch-message "")
 
-;; 日本語に設定する
-(set-language-environment "Japanese")
+;; 文字コードをUTF-8に設定する
+(set-language-environment "UTF-8")
 
 ;; IDOを有効化
 (ido-mode 1)
 
 ;; 鬼軍曹を追加
-(add-to-list 'load-path "~/.emacs.d/drill-instructor")
-(require 'drill-instructor)
-(setq drill-instructor-global t)
+;; (add-to-list 'load-path "~/.emacs.d/drill-instructor")
+;; (require 'drill-instructor)
+;; (setq drill-instructor-global t)
 
 ;; shellの文字化けを回避
 (add-hook 'shell-mode-hook
@@ -77,18 +67,23 @@
 (setq ring-bell-function 'ignore)
 
 ;; バックアップファイルを~/.emacs.d/ehistに保存
-(setq backup-directory-alist '((".*" . "~/.emacs.d/.ehist")))
+(setq backup-directory-alist '((".*" . "~/.emacs.d/ehist")))
 
-;; 半角英字設定
-(set-face-attribute 'default nil :family "Noto Mono for Powerline" :height 100)
-;; 全角かな設定
-(set-fontset-font (frame-parameter nil 'font)
-                  'japanese-jisx0208
-                  (font-spec :family "Noto Sans CJK JP" :size 14))
-;; 半角ｶﾅ設定
-(set-fontset-font (frame-parameter nil 'font)
-                  'katakana-jisx0201
-                  (font-spec :family "Noto Sans CJK JP" :size 14))
+(cond ((display-graphic-p)
+       ;; 半角英字設定
+       (set-face-attribute 'default nil :family "NotoSansMono Nerd Font" :height 150)
+       ;(add-to-list 'default-frame-alist '(font . "NotoSansMono Nerd Font-14" ))
+
+       ;; 全角かな設定 Linuxではjapanese-jisx0213となる
+       (set-fontset-font (frame-parameter nil 'font)
+                         'japanese-jisx0213-2
+                         (font-spec :family "Noto Sans CJK JP" :size 20))
+       
+       ;; 半角ｶﾅ設定 Linuxではkatakana-jisx0213でも問題ない
+       (set-fontset-font (frame-parameter nil 'font)
+                         'katakana-jisx0201
+                         (font-spec :family "Noto Sans CJK JP" :size 20)))
+      (t 0))
 
 ;; GUI Settings
 (if window-system
@@ -105,15 +100,37 @@
   (require 'eaw)
   (eaw-fullwidth))
 
-;; Windows
-(when (eq system-type 'windows-nt)
-  )
 
-;; Mac OS
-(when (eq system-type 'darwin)
+(require 'auto-complete)
+(require 'auto-complete-config)
+;; enable AC global 
+(global-auto-complete-mode t)
+(define-key ac-completing-map (kbd "M-n") 'ac-next)  ; M-n, next suggest
+(define-key ac-completing-map (kbd "M-p") 'ac-previous) ; M-p, previous suggest
+(setq-default ac-sources '(ac-source-filename ac-source-words-in-same-mode-buffers))
+    ;; また、Emacs Lispモードではac-source-symbolsを追加で利用
+    (add-hook 'emacs-lisp-mode-hook (lambda () (add-to-list 'ac-sources 'ac-source-symbols t)))
+    ;; 以下、自動で補完する人用
+    (setq ac-auto-start 3)
 
-  )
 
+;; Rails configration
+;; (require 'projectile)
+;; (projectile-global-mode)
+;; (require 'projectile-rails)
+;; (add-hook 'projectile-mode-hook 'projectile-rails-on)
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+
+;; Ruby2.0以上を使う場合は、coding utf-8 のマジックコメントを書く必要がないので、自動挿入機能を無効にする。
+(setq ruby-insert-encodig-magic-comment nil)
+(autoload 'ruby-mode "ruby-mode" "Major mode for ruby files" t)
+   (add-to-list 'auto-mode-alist '("\\.rb\\'" . ruby-mode))
+   (add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
+
+;; shellのPATHを引継ぐ
+(when (eq system-type 'gnu/linux)
+  (exec-path-from-shell-initialize))
 
 
 (custom-set-variables
@@ -121,10 +138,18 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (dracula-theme))))
+ '(blink-cursor-mode nil)
+ '(column-number-mode t)
+ '(package-selected-packages
+   (quote
+    (rust-mode ac-emoji ac-html-bootstrap ac-mozc esh-autosuggest fcitx web-mode web-server websocket markdown-mode exec-path-from-shell projectile-rails ruby-additional ruby-electric ruby-end ruby-refactor auto-complete dracula-theme))))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+
+
