@@ -3,6 +3,7 @@
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
 (package-initialize)
+(unless package-archive-contents (package-refresh-contents))
 
 ;; dracula-themeを使用 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
@@ -27,12 +28,6 @@
 ;; インデント文字をタブではなく空白に設定
 (setq-default indent-tabs-mode nil)
 
-;; デフォルトの文字コード
-(set-default-coding-systems 'utf-8)
-(prefer-coding-system 'utf-8)
-
-;; テキストファイル・新規バッファの文字コード
-(set-file-name-coding-system 'utf-8)
 
 ;; C-hをBackSpaceに設定
 (global-set-key (kbd "C-h") 'delete-backward-char)
@@ -46,8 +41,17 @@
 ;; 初期メッセージを消去
 (setq initial-scratch-message "")
 
-;; 文字コードをUTF-8に設定する
-(set-language-environment "UTF-8")
+;; 言語設定
+(set-language-environment "Japanese")
+(setq default-input-method "japanese-mozc")
+
+;; デフォルトの文字コード
+(set-default-coding-systems 'utf-8)
+(prefer-coding-system 'utf-8)
+
+;; テキストファイル・新規バッファの文字コード
+(set-file-name-coding-system 'utf-8)
+
 
 ;; IDOを有効化
 (ido-mode 1)
@@ -66,9 +70,13 @@
 ;; ビープ音を消す
 (setq ring-bell-function 'ignore)
 
+;; yesと入力するのは面倒なのでyで十分
+(defalias 'yes-or-no-p 'y-or-n-p)
+
 ;; バックアップファイルを~/.emacs.d/ehistに保存
 (setq backup-directory-alist '((".*" . "~/.emacs.d/ehist")))
 
+;; フォント設定
 (cond ((display-graphic-p)
        ;; 半角英字設定
        (set-face-attribute 'default nil :family "NotoSansMono Nerd Font" :height 150)
@@ -77,21 +85,35 @@
        ;; 全角かな設定 Linuxではjapanese-jisx0213となる
        (set-fontset-font (frame-parameter nil 'font)
                          'japanese-jisx0213-2
-                         (font-spec :family "Noto Sans CJK JP" :size 20))
+                         (font-spec :family "Noto Sans CJK JP" :size 18))
        
        ;; 半角ｶﾅ設定 Linuxではkatakana-jisx0213でも問題ない
        (set-fontset-font (frame-parameter nil 'font)
                          'katakana-jisx0201
-                         (font-spec :family "Noto Sans CJK JP" :size 20)))
+                         (font-spec :family "Noto Sans CJK JP" :size 18)))
       (t 0))
 
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+
+;; Ruby2.0以上を使う場合は、coding utf-8 のマジックコメントを書く必要がないので、自動挿入機能を無効にする。
+(require 'ruby-mode)
+(defun ruby-mode-set-encoding () nil)
+(autoload 'ruby-mode "ruby-mode" "Major mode for ruby files" t)
+   (add-to-list 'auto-mode-alist '("\\.rb\\'" . ruby-mode))
+   (add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
+
+
 ;; GUI Settings
-(if window-system
-    (set-frame-parameter nil 'alpha 90)
+(if (not window-system)
+  ;;  (set-frame-parameter nil 'alpha 90)
   ;; ツールバーを削除
   (tool-bar-mode 0)
   ;; メニューバーを削除
-  (menu-bar-mode 0))
+  (menu-bar-mode 0)
+  ;; 現在行をアンダーライン
+  (setq hl-line-face 'underline)
+  (global-hl-line-mode))
 
 ;; linux()
 (when (eq system-type 'gnu/linux)
@@ -119,14 +141,6 @@
 ;; (projectile-global-mode)
 ;; (require 'projectile-rails)
 ;; (add-hook 'projectile-mode-hook 'projectile-rails-on)
-(require 'web-mode)
-(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-
-;; Ruby2.0以上を使う場合は、coding utf-8 のマジックコメントを書く必要がないので、自動挿入機能を無効にする。
-(setq ruby-insert-encodig-magic-comment nil)
-(autoload 'ruby-mode "ruby-mode" "Major mode for ruby files" t)
-   (add-to-list 'auto-mode-alist '("\\.rb\\'" . ruby-mode))
-   (add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
 
 ;; shellのPATHを引継ぐ
 (when (eq system-type 'gnu/linux)
@@ -142,7 +156,7 @@
  '(column-number-mode t)
  '(package-selected-packages
    (quote
-    (rust-mode ac-emoji ac-html-bootstrap ac-mozc esh-autosuggest fcitx web-mode web-server websocket markdown-mode exec-path-from-shell projectile-rails ruby-additional ruby-electric ruby-end ruby-refactor auto-complete dracula-theme))))
+    (mozc rust-mode ac-emoji ac-html-bootstrap ac-mozc esh-autosuggest fcitx web-mode web-server websocket markdown-mode exec-path-from-shell projectile-rails ruby-additional ruby-electric ruby-end ruby-refactor auto-complete dracula-theme))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
