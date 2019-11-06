@@ -156,7 +156,7 @@
  '(column-number-mode t)
  '(package-selected-packages
    (quote
-    (mozc rust-mode ac-emoji ac-html-bootstrap ac-mozc esh-autosuggest fcitx web-mode web-server websocket markdown-mode exec-path-from-shell projectile-rails ruby-additional ruby-electric ruby-end ruby-refactor auto-complete dracula-theme))))
+    (mozc adoc-mode rust-mode ac-emoji ac-html-bootstrap ac-mozc esh-autosuggest fcitx web-mode web-server websocket markdown-mode exec-path-from-shell projectile-rails ruby-additional ruby-electric ruby-end ruby-refactor auto-complete dracula-theme))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
