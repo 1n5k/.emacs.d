@@ -1,0 +1,8 @@
+== TL;DR
+[big]#GNU_ELPAで使われてる公開鍵の期限が切れているので更新する#
+
+.方法1
+[source, sh]
+----
+$ gpg --homedir ~/.emacs.d/elpa/gnupg --recieve-keys 066DAFCB81E42C40
+----
