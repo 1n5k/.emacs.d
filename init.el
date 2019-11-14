@@ -1,5 +1,29 @@
 ;;; -*- coding: utf-8 -*-
 
+(defvar auto-install-package-list
+  '(slim-mode
+    ac-slime
+    mozc
+    adoc-mode
+    rust-mode
+    ac-emoji
+    ac-html-bootstrap
+    ac-mozc
+    esh-autosuggest
+    fcitx
+    web-mode
+    web-server
+    websocket
+    markdown-mode
+    exec-path-from-shell
+    ruby-additional
+    ruby-electric
+    ruby-end
+    ruby-refactor
+    auto-complete
+    dracula-theme)
+  "Packages to be installed")
+
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
@@ -7,8 +31,13 @@
 (package-initialize)
 (unless package-archive-contents (package-refresh-contents))
 
+;; auto-installation
+(dolist (pkg auto-install-package-list)
+  (unless (package-installed-p pkg)
+    (package-install pkg)))
+
 ;; dracula-themeを使用 
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+;; (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (load-theme 'dracula t)
 
 ;; 行を表示
@@ -83,7 +112,6 @@
 (cond ((display-graphic-p)
        ;; 半角英字設定
        (set-face-attribute 'default nil :family "NotoSansMono Nerd Font" :height 150)
-       ;(add-to-list 'default-frame-alist '(font . "NotoSansMono Nerd Font-14" ))
 
        (setq use-default-font-for-symbols nil)
        ;; 日本語フォント設定
@@ -112,8 +140,18 @@
                          'kana
                          (font-spec :family "Noto Sans Mono CJK JP" :size 18))))
 
+;; ERB mode
 (autoload 'web-mode "web-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+
+;; asciidoc alias
+(autoload 'adoc-mode "adoc-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.adoc\\'" . adoc-mode))
+
+;; markdown 
+(autoload 'markdown-mode "markdown-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+
 
 ;; Ruby2.0以上を使う場合は、coding utf-8 のマジックコメントを書く必要がないので、自動挿入機能を無効にする。
 (autoload 'ruby-mode "ruby-mode" nil t)
@@ -143,7 +181,7 @@
   ;; shellのPATHを引継ぐ
   (exec-path-from-shell-initialize))
 
-
+;; auto-complete
 (require 'auto-complete nil t)
 (require 'auto-complete-config nil t)
 ;; enable AC global 
@@ -155,12 +193,6 @@
     (add-hook 'emacs-lisp-mode-hook (lambda () (add-to-list 'ac-sources 'ac-source-symbols t)))
     ;; 以下、自動で補完する人用
     (setq ac-auto-start 3)
-
-;; Rails configration
-;; (require 'projectile)
-;; (projectile-global-mode)
-;; (require 'projectile-rails)
-;; (add-hook 'projectile-mode-hook 'projectile-rails-on)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
