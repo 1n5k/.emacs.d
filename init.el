@@ -1,3 +1,5 @@
+;;; -*- coding: utf-8 -*-
+
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
@@ -28,9 +30,11 @@
 ;; インデント文字をタブではなく空白に設定
 (setq-default indent-tabs-mode nil)
 
-
 ;; C-hをBackSpaceに設定
 (global-set-key (kbd "C-h") 'delete-backward-char)
+
+;; enable/disable Mozc with "C-,"
+(global-set-key (kbd "C-,") 'toggle-input-method)
 
 ;; タイトルにフルパスを表示
 (setq frame-title-format "%f")
@@ -51,7 +55,6 @@
 
 ;; テキストファイル・新規バッファの文字コード
 (set-file-name-coding-system 'utf-8)
-
 
 ;; IDOを有効化
 (ido-mode 1)
@@ -82,22 +85,38 @@
        (set-face-attribute 'default nil :family "NotoSansMono Nerd Font" :height 150)
        ;(add-to-list 'default-frame-alist '(font . "NotoSansMono Nerd Font-14" ))
 
-       ;; 全角かな設定 Linuxではjapanese-jisx0213となる
+       (setq use-default-font-for-symbols nil)
+       ;; 日本語フォント設定
+       (set-fontset-font (frame-parameter nil 'font)
+                         'japanese-jisx0208
+                         (font-spec :family "Noto Sans Mono CJK JP" :size 18))
+       (set-fontset-font (frame-parameter nil 'font)
+                         'japanese-jisx0208-1978
+                         (font-spec :family "Noto Sans Mono CJK JP" :size 18))
+       (set-fontset-font (frame-parameter nil 'font)
+                         'japanese-jisx0212
+                         (font-spec :family "Noto Sans Mono CJK JP" :size 18))
+       (set-fontset-font (frame-parameter nil 'font)
+                         'japanese-jisx0213-1
+                         (font-spec :family "Noto Sans Mono CJK JP" :size 18))
        (set-fontset-font (frame-parameter nil 'font)
                          'japanese-jisx0213-2
-                         (font-spec :family "Noto Sans CJK JP" :size 18))
-       
-       ;; 半角ｶﾅ設定 Linuxではkatakana-jisx0213でも問題ない
+                         (font-spec :family "Noto Sans Mono CJK JP" :size 18))
        (set-fontset-font (frame-parameter nil 'font)
-                         'katakana-jisx0201
-                         (font-spec :family "Noto Sans CJK JP" :size 18)))
-      (t 0))
+                         'japanese-jisx0213.2004-1
+                         (font-spec :family "Noto Sans Mono CJK JP" :size 18))
+       (set-fontset-font (frame-parameter nil 'font)
+                         'jisx0201
+                         (font-spec :family "Noto Sans Mono CJK JP" :size 18))
+       (set-fontset-font (frame-parameter nil 'font)
+                         'kana
+                         (font-spec :family "Noto Sans Mono CJK JP" :size 18))))
 
-(require 'web-mode)
+(autoload 'web-mode "web-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
 
 ;; Ruby2.0以上を使う場合は、coding utf-8 のマジックコメントを書く必要がないので、自動挿入機能を無効にする。
-(require 'ruby-mode)
+(autoload 'ruby-mode "ruby-mode" nil t)
 (defun ruby-mode-set-encoding () nil)
 (autoload 'ruby-mode "ruby-mode" "Major mode for ruby files" t)
    (add-to-list 'auto-mode-alist '("\\.rb\\'" . ruby-mode))
@@ -115,16 +134,18 @@
   (setq hl-line-face 'underline)
   (global-hl-line-mode))
 
-;; linux()
+;; Launch on linux
 (when (eq system-type 'gnu/linux)
   ;; 日本語や絵文字を全角にして表示
   (add-to-list 'load-path "~/.emacs.d/site-lisp")
   (require 'eaw)
-  (eaw-fullwidth))
+  (eaw-fullwidth)
+  ;; shellのPATHを引継ぐ
+  (exec-path-from-shell-initialize))
 
 
-(require 'auto-complete)
-(require 'auto-complete-config)
+(require 'auto-complete nil t)
+(require 'auto-complete-config nil t)
 ;; enable AC global 
 (global-auto-complete-mode t)
 (define-key ac-completing-map (kbd "M-n") 'ac-next)  ; M-n, next suggest
@@ -135,17 +156,11 @@
     ;; 以下、自動で補完する人用
     (setq ac-auto-start 3)
 
-
 ;; Rails configration
 ;; (require 'projectile)
 ;; (projectile-global-mode)
 ;; (require 'projectile-rails)
 ;; (add-hook 'projectile-mode-hook 'projectile-rails-on)
-
-;; shellのPATHを引継ぐ
-(when (eq system-type 'gnu/linux)
-  (exec-path-from-shell-initialize))
-
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -156,7 +171,7 @@
  '(column-number-mode t)
  '(package-selected-packages
    (quote
-    (ac-slime mozc adoc-mode rust-mode ac-emoji ac-html-bootstrap ac-mozc esh-autosuggest fcitx web-mode web-server websocket markdown-mode exec-path-from-shell projectile-rails ruby-additional ruby-electric ruby-end ruby-refactor auto-complete dracula-theme))))
+    (slim-mode ac-slime mozc adoc-mode rust-mode ac-emoji ac-html-bootstrap ac-mozc esh-autosuggest fcitx web-mode web-server websocket markdown-mode exec-path-from-shell projectile-rails ruby-additional ruby-electric ruby-end ruby-refactor auto-complete dracula-theme))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -164,6 +179,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-
-
 
