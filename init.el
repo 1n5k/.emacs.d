@@ -138,7 +138,12 @@
                          (font-spec :family "Noto Sans Mono CJK JP" :size 18))
        (set-fontset-font (frame-parameter nil 'font)
                          'kana
-                         (font-spec :family "Noto Sans Mono CJK JP" :size 18))))
+                         (font-spec :family "Noto Sans Mono CJK JP" :size 18))
+       ;; Emoji Setting(WIP)
+       (set-fontset-font (frame-parameter nil 'font)
+                       '(#x1F300 . #x1F9FF)
+                       (font-spec :family "NotoSansMono Nerd Font" :size 18))
+       ))
 
 ;; ERB mode
 (autoload 'web-mode "web-mode" nil t)
@@ -154,11 +159,10 @@
 
 
 ;; Ruby2.0以上を使う場合は、coding utf-8 のマジックコメントを書く必要がないので、自動挿入機能を無効にする。
-(autoload 'ruby-mode "ruby-mode" nil t)
-(defun ruby-mode-set-encoding () nil)
-(autoload 'ruby-mode "ruby-mode" "Major mode for ruby files" t)
-   (add-to-list 'auto-mode-alist '("\\.rb\\'" . ruby-mode))
-   (add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
+;;(defun ruby-mode-set-encoding () nil)
+(custom-set-variables '(ruby-insert-encoding-magic-comment nil))
+(add-to-list 'auto-mode-alist '("\\.rb\\'" . ruby-mode))
+(add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
 
 
 ;; GUI Settings
