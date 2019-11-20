@@ -1,7 +1,10 @@
 ;;; -*- coding: utf-8 -*-
 
 (defvar auto-install-package-list
-  '(slim-mode
+  '(flycheck
+    git
+    bash-completion
+    slim-mode
     ac-slime
     mozc
     adoc-mode
@@ -160,10 +163,22 @@
 
 ;; Ruby2.0以上を使う場合は、coding utf-8 のマジックコメントを書く必要がないので、自動挿入機能を無効にする。
 ;;(defun ruby-mode-set-encoding () nil)
-(custom-set-variables '(ruby-insert-encoding-magic-comment nil))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(blink-cursor-mode nil)
+ '(column-number-mode t)
+ '(package-selected-packages
+   (quote
+    (flycheck git bash-completion slim-mode ac-slime mozc adoc-mode rust-mode ac-emoji ac-html-bootstrap ac-mozc esh-autosuggest fcitx web-mode web-server websocket markdown-mode exec-path-from-shell projectile-rails ruby-additional ruby-electric ruby-end ruby-refactor auto-complete dracula-theme)))
+ '(ruby-insert-encoding-magic-comment nil))
 (add-to-list 'auto-mode-alist '("\\.rb\\'" . ruby-mode))
 (add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
-
+; use flycheck
+(add-hook 'ruby-mode-hook #'flycheck-mode)
+                                        
 
 ;; GUI Settings
 (if (not window-system)
@@ -198,16 +213,7 @@
     ;; 以下、自動で補完する人用
     (setq ac-auto-start 3)
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(blink-cursor-mode nil)
- '(column-number-mode t)
- '(package-selected-packages
-   (quote
-    (slim-mode ac-slime mozc adoc-mode rust-mode ac-emoji ac-html-bootstrap ac-mozc esh-autosuggest fcitx web-mode web-server websocket markdown-mode exec-path-from-shell projectile-rails ruby-additional ruby-electric ruby-end ruby-refactor auto-complete dracula-theme))))
+
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
