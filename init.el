@@ -1,7 +1,38 @@
 ;;; -*- coding: utf-8 -*-
 
 (defvar auto-install-package-list
-  '(flycheck
+  '(mozc-im
+    multi-term
+    org
+    org-ac
+    org-ehtml
+    powerline
+    rspec-mode
+    ruby-compilation
+    ruby-extra-highlight
+    ruby-factory
+    sbt-mode
+    scala-mode
+    scalariform
+    shell-command
+    shell-history
+    shell-pop
+    shelldoc
+    total-lines
+    tramp
+    xterm-color
+    flycheck-pycheckers
+    json-mode
+    json-rpc
+    look-mode dumb-jump
+    flycheck-popup-tip
+    ac-html
+    flycheck-status-emoji
+    ac-c-headers
+    auto-complete-c-headers
+    pandoc
+    doom-themes
+    flycheck
     git
     bash-completion
     slim-mode
@@ -23,8 +54,7 @@
     ruby-electric
     ruby-end
     ruby-refactor
-    auto-complete
-    dracula-theme)
+    auto-complete)
   "Packages to be installed")
 
 (require 'package)
@@ -39,9 +69,9 @@
   (unless (package-installed-p pkg)
     (package-install pkg)))
 
-;; dracula-themeを使用 
-;; (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-(load-theme 'dracula t)
+;; dracula-themeを使用してたけど、Synthwaveがきになったのでこっちを使う
+;; (load-theme 'dracula t)
+(load-theme 'doom-laserwave t)
 
 ;; 行を表示
 (column-number-mode t)
@@ -172,7 +202,7 @@
  '(column-number-mode t)
  '(package-selected-packages
    (quote
-    (flycheck git bash-completion slim-mode ac-slime mozc adoc-mode rust-mode ac-emoji ac-html-bootstrap ac-mozc esh-autosuggest fcitx web-mode web-server websocket markdown-mode exec-path-from-shell projectile-rails ruby-additional ruby-electric ruby-end ruby-refactor auto-complete dracula-theme)))
+    (mozc-im multi-term org org-ac org-ehtml powerline rspec-mode ruby-compilation ruby-extra-highlight ruby-factory sbt-mode scala-mode scalariform shell-command shell-history shell-pop shelldoc total-lines tramp xterm-color flycheck-pycheckers json-mode json-rpc look-mode dumb-jump flycheck-popup-tip ac-html flycheck-status-emoji ac-c-headers auto-complete-c-headers pandoc doom-themes flycheck git bash-completion slim-mode ac-slime mozc adoc-mode rust-mode ac-emoji ac-html-bootstrap ac-mozc esh-autosuggest fcitx web-mode web-server websocket markdown-mode exec-path-from-shell projectile-rails ruby-additional ruby-electric ruby-end ruby-refactor auto-complete)))
  '(ruby-insert-encoding-magic-comment nil))
 (add-to-list 'auto-mode-alist '("\\.rb\\'" . ruby-mode))
 (add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
