@@ -7,7 +7,6 @@
     ido-skk 
     ammonite-term-repl
     ensime
-    mozc-im
     multi-term
     org
     org-ac
@@ -43,12 +42,10 @@
     bash-completion
     slim-mode
     ac-slime
-    mozc
     adoc-mode
     rust-mode
     ac-emoji
     ac-html-bootstrap
-    ac-mozc
     esh-autosuggest
     fcitx
     web-mode
@@ -101,7 +98,7 @@
 ;; C-hをBackSpaceに設定
 (global-set-key (kbd "C-h") 'delete-backward-char)
 
-;; enable/disable Mozc with "C-,"
+;; toggle japanese input method with "C-,"
 (global-set-key (kbd "C-,") 'toggle-input-method)
 
 ;; タイトルにフルパスを表示
@@ -115,7 +112,10 @@
 
 ;; 言語設定
 (set-language-environment "Japanese")
-(setq default-input-method "japanese-mozc")
+(when (require 'skk nil t)
+  (global-set-key (kbd "C-x j") 'skk-auto-fill-mode)
+  (setq default-input-method "japanese-skk")
+  (require 'skk-study))
 
 ;; デフォルトの文字コード
 (set-default-coding-systems 'utf-8)
@@ -208,7 +208,7 @@
  '(column-number-mode t)
  '(package-selected-packages
    (quote
-    (ac-skk ddskk ido-skk ammonite-term-repl ensime mozc-im multi-term org org-ac org-ehtml powerline rspec-mode ruby-compilation ruby-extra-highlight ruby-factory sbt-mode scala-mode scalariform shell-command shell-history shell-pop shelldoc total-lines tramp xterm-color flycheck-pycheckers json-mode json-rpc look-mode dumb-jump flycheck-popup-tip ac-html flycheck-status-emoji ac-c-headers auto-complete-c-headers pandoc doom-themes flycheck git bash-completion slim-mode ac-slime mozc adoc-mode rust-mode ac-emoji ac-html-bootstrap ac-mozc esh-autosuggest fcitx web-mode web-server websocket markdown-mode exec-path-from-shell projectile-rails ruby-additional ruby-electric ruby-end ruby-refactor auto-complete)))
+    (ddskk-posframe ac-skk ddskk ido-skk ammonite-term-repl ensime multi-term org org-ac org-ehtml powerline rspec-mode ruby-compilation ruby-extra-highlight ruby-factory sbt-mode scala-mode scalariform shell-command shell-history shell-pop shelldoc total-lines tramp xterm-color flycheck-pycheckers json-mode json-rpc look-mode dumb-jump flycheck-popup-tip ac-html flycheck-status-emoji ac-c-headers auto-complete-c-headers pandoc doom-themes flycheck git bash-completion slim-mode ac-slime adoc-mode rust-mode ac-emoji ac-html-bootstrap esh-autosuggest fcitx web-mode web-server websocket markdown-mode exec-path-from-shell projectile-rails ruby-additional ruby-electric ruby-end ruby-refactor auto-complete)))
  '(ruby-insert-encoding-magic-comment nil))
 (add-to-list 'auto-mode-alist '("\\.rb\\'" . ruby-mode))
 (add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
