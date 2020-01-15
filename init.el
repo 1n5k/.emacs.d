@@ -2,7 +2,9 @@
 ;;; -*- coding: utf-8 -*-
 
 (defvar auto-install-package-list
-  '(ac-skk
+  '(tramp
+    tramp-theme
+    ac-skk
     ddskk
     ido-skk 
     ammonite-term-repl
@@ -208,7 +210,7 @@
  '(column-number-mode t)
  '(package-selected-packages
    (quote
-    (ddskk-posframe ac-skk ddskk ido-skk ammonite-term-repl ensime multi-term org org-ac org-ehtml powerline rspec-mode ruby-compilation ruby-extra-highlight ruby-factory sbt-mode scala-mode scalariform shell-command shell-history shell-pop shelldoc total-lines tramp xterm-color flycheck-pycheckers json-mode json-rpc look-mode dumb-jump flycheck-popup-tip ac-html flycheck-status-emoji ac-c-headers auto-complete-c-headers pandoc doom-themes flycheck git bash-completion slim-mode ac-slime adoc-mode rust-mode ac-emoji ac-html-bootstrap esh-autosuggest fcitx web-mode web-server websocket markdown-mode exec-path-from-shell projectile-rails ruby-additional ruby-electric ruby-end ruby-refactor auto-complete)))
+    (tramp-theme ddskk-posframe ac-skk ddskk ido-skk ammonite-term-repl ensime multi-term org org-ac org-ehtml powerline rspec-mode ruby-compilation ruby-extra-highlight ruby-factory sbt-mode scala-mode scalariform shell-command shell-history shell-pop shelldoc total-lines tramp xterm-color flycheck-pycheckers json-mode json-rpc look-mode dumb-jump flycheck-popup-tip ac-html flycheck-status-emoji ac-c-headers auto-complete-c-headers pandoc doom-themes flycheck git bash-completion slim-mode ac-slime adoc-mode rust-mode ac-emoji ac-html-bootstrap esh-autosuggest fcitx web-mode web-server websocket markdown-mode exec-path-from-shell projectile-rails ruby-additional ruby-electric ruby-end ruby-refactor auto-complete)))
  '(ruby-insert-encoding-magic-comment nil))
 (add-to-list 'auto-mode-alist '("\\.rb\\'" . ruby-mode))
 (add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
