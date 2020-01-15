@@ -10,6 +10,9 @@ eww/
 projectile-bookmarks.eld
 recentf
 tramp
+url/
+mastodon.plstore
+session.*
 
 # no track elpa/
 elpa/

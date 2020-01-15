@@ -1,6 +1,6 @@
 .on Emacs buffer...
 ----
 MiniBuffer: C-x C-f /sudo::[RET]
-****[Enter root password]
+****[Enter password]
 MiniBuffer: /sudo::root@HOST-PC/path/to/file[RET]
 ----
