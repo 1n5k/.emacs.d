@@ -210,7 +210,7 @@
  '(column-number-mode t)
  '(package-selected-packages
    (quote
-    (tramp-theme ddskk-posframe ac-skk ddskk ido-skk ammonite-term-repl ensime multi-term org org-ac org-ehtml powerline rspec-mode ruby-compilation ruby-extra-highlight ruby-factory sbt-mode scala-mode scalariform shell-command shell-history shell-pop shelldoc total-lines tramp xterm-color flycheck-pycheckers json-mode json-rpc look-mode dumb-jump flycheck-popup-tip ac-html flycheck-status-emoji ac-c-headers auto-complete-c-headers pandoc doom-themes flycheck git bash-completion slim-mode ac-slime adoc-mode rust-mode ac-emoji ac-html-bootstrap esh-autosuggest fcitx web-mode web-server websocket markdown-mode exec-path-from-shell projectile-rails ruby-additional ruby-electric ruby-end ruby-refactor auto-complete)))
+    (gradle-mode lsp-dart flutter-l10n-flycheck flutter dart-mode tramp-theme ddskk-posframe ac-skk ddskk ido-skk ammonite-term-repl ensime multi-term org org-ac org-ehtml powerline rspec-mode ruby-compilation ruby-extra-highlight ruby-factory sbt-mode scala-mode scalariform shell-command shell-history shell-pop shelldoc total-lines tramp xterm-color flycheck-pycheckers json-mode json-rpc look-mode dumb-jump flycheck-popup-tip ac-html flycheck-status-emoji ac-c-headers auto-complete-c-headers pandoc doom-themes flycheck git bash-completion slim-mode ac-slime adoc-mode rust-mode ac-emoji ac-html-bootstrap esh-autosuggest fcitx web-mode web-server websocket markdown-mode exec-path-from-shell projectile-rails ruby-additional ruby-electric ruby-end ruby-refactor auto-complete)))
  '(ruby-insert-encoding-magic-comment nil))
 (add-to-list 'auto-mode-alist '("\\.rb\\'" . ruby-mode))
 (add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
@@ -236,7 +236,36 @@
   (require 'eaw)
   (eaw-fullwidth)
   ;; shellのPATHを引継ぐ
-  (exec-path-from-shell-initialize))
+  (exec-path-from-shell-initialize)
+
+  (add-to-list 'load-path "~/.emacs.d/3rd-lisp")
+  (require 'multi-term nil t)
+  (setq multi-term-program "/bin/zsh")
+  ;; タブ等を出している場合に、ターミナルの高さを合わせる
+  (add-hook 'term-mode-hook
+            (lambda ()
+              (setq term-height (- (window-height) 2))))
+  
+  ;; C-c a で ansi-term を起動する
+  (global-set-key (kbd "C-c a")
+                  (lambda ()
+                    (interactive)
+                    (ansi-term "zsh")))
+  ;; Emacs に認識させたいキーがある場合は、term-unbind-key-list に追加する
+  (add-to-list 'term-unbind-key-list "C-\\") ; IME の切り替えを有効とする
+  ;; (add-to-list 'term-unbind-key-list "C-o")  ; IME の切り替えに C-o を設定している場合
+  
+  ;; terminal に直接通したいキーがある場合は、以下をアンコメントする
+  (delete "<ESC>" term-unbind-key-list)
+  ;; (delete "C-h" term-unbind-key-list)
+  ;; (delete "C-z" term-unbind-key-list)
+  ;; (delete "C-x" term-unbind-key-list)
+  ;; (delete "C-c" term-unbind-key-list)
+  ;; (delete "C-y" term-unbind-key-list)
+
+  ;; C-c m で multi-term を起動する
+  (global-set-key (kbd "C-c m") 'multi-term)
+)
 
 ;; auto-complete
 (require 'auto-complete nil t)
@@ -251,7 +280,12 @@
     ;; 以下、自動で補完する人用
     (setq ac-auto-start 3)
 
-
+;; Dart-mode 設定
+(require 'dart-mode nil t)
+(setq dart-enable-analysis-server t)
+(setq dart-format-on-save t)     
+(add-hook 'dart-mode-hook 'flycheck-mode)
+(add-hook 'dart-mode-hook 'lsp)
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
