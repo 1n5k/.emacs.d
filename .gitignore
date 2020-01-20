@@ -13,6 +13,7 @@ tramp
 url/
 mastodon.plstore
 session.*
+transient/
 
 # no track elpa/
 elpa/

@@ -210,7 +210,7 @@
  '(column-number-mode t)
  '(package-selected-packages
    (quote
-    (gradle-mode lsp-dart flutter-l10n-flycheck flutter dart-mode tramp-theme ddskk-posframe ac-skk ddskk ido-skk ammonite-term-repl ensime multi-term org org-ac org-ehtml powerline rspec-mode ruby-compilation ruby-extra-highlight ruby-factory sbt-mode scala-mode scalariform shell-command shell-history shell-pop shelldoc total-lines tramp xterm-color flycheck-pycheckers json-mode json-rpc look-mode dumb-jump flycheck-popup-tip ac-html flycheck-status-emoji ac-c-headers auto-complete-c-headers pandoc doom-themes flycheck git bash-completion slim-mode ac-slime adoc-mode rust-mode ac-emoji ac-html-bootstrap esh-autosuggest fcitx web-mode web-server websocket markdown-mode exec-path-from-shell projectile-rails ruby-additional ruby-electric ruby-end ruby-refactor auto-complete)))
+    (magit magit-lfs magit-org-todos gradle-mode lsp-dart flutter-l10n-flycheck flutter dart-mode tramp-theme ddskk-posframe ac-skk ddskk ido-skk ammonite-term-repl ensime multi-term org org-ac org-ehtml powerline rspec-mode ruby-compilation ruby-extra-highlight ruby-factory sbt-mode scala-mode scalariform shell-command shell-history shell-pop shelldoc total-lines tramp xterm-color flycheck-pycheckers json-mode json-rpc look-mode dumb-jump flycheck-popup-tip ac-html flycheck-status-emoji ac-c-headers auto-complete-c-headers pandoc doom-themes flycheck git bash-completion slim-mode ac-slime adoc-mode rust-mode ac-emoji ac-html-bootstrap esh-autosuggest fcitx web-mode web-server websocket markdown-mode exec-path-from-shell projectile-rails ruby-additional ruby-electric ruby-end ruby-refactor auto-complete)))
  '(ruby-insert-encoding-magic-comment nil))
 (add-to-list 'auto-mode-alist '("\\.rb\\'" . ruby-mode))
 (add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
@@ -235,9 +235,10 @@
   (add-to-list 'load-path "~/.emacs.d/site-lisp")
   (require 'eaw)
   (eaw-fullwidth)
+
   ;; shellのPATHを引継ぐ
   (exec-path-from-shell-initialize)
-
+  
   (add-to-list 'load-path "~/.emacs.d/3rd-lisp")
   (require 'multi-term nil t)
   (setq multi-term-program "/bin/zsh")
@@ -265,7 +266,7 @@
 
   ;; C-c m で multi-term を起動する
   (global-set-key (kbd "C-c m") 'multi-term)
-)
+  )
 
 ;; auto-complete
 (require 'auto-complete nil t)
@@ -287,10 +288,17 @@
 (add-hook 'dart-mode-hook 'flycheck-mode)
 (add-hook 'dart-mode-hook 'lsp)
 
+;; 透明度を変更するコマンド M-x set-alpha
+;; http://qiita.com/marcy@github/items/ba0d018a03381a964f24
+(defun set-alpha (alpha-num)
+  "set frame parameter 'alpha"
+  (interactive "nAlpha: ")
+  (set-frame-parameter nil 'alpha (cons alpha-num '(90))))
+
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-
