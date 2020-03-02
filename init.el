@@ -7,8 +7,7 @@
     ac-skk
     ddskk
     ido-skk 
-    ammonite-term-repl
-    ensime
+    ammonite-term-repl    
     multi-term
     org
     org-ac
@@ -31,7 +30,8 @@
     flycheck-pycheckers
     json-mode
     json-rpc
-    look-mode dumb-jump
+    look-mode
+    dumb-jump
     flycheck-popup-tip
     ac-html
     flycheck-status-emoji
@@ -55,7 +55,6 @@
     websocket
     markdown-mode
     exec-path-from-shell
-    ruby-additional
     ruby-electric
     ruby-end
     ruby-refactor
